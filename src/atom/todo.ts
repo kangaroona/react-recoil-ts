@@ -8,3 +8,7 @@ export const todoListFilterState = atom({
   key: "todoListFilterState",
   default: "Show All",
 });
+export const currentUserIDState = atom({
+  key: "CurrentUserID",
+  default: 1,
+});

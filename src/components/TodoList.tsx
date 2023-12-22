@@ -1,6 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import TodoItemCreator from "./TodoItemCreator";
-import { useRecoilValue, selector } from "recoil";
+import { useRecoilValue, selector, RecoilRoot } from "recoil";
 import { todoListState, todoListFilterState } from "../atom/todo";
 import TodoItem from "./TodoItem";
 import TodoListFilter from "./TodoListFilter";
@@ -28,12 +28,16 @@ function TodoList() {
     <>
       {/* <TodoListStats /> */}
       {/* <TodoListFilters /> */}
-      <TodoItemCreator />
-      <TodoListFilter />
-      {todoList.map((todoItem) => (
-        <TodoItem key={todoItem.id} item={todoItem} />
-      ))}
-      <TodoListStats />
+      <RecoilRoot>
+        <TodoItemCreator />
+        <Suspense fallback={<div>加载中...</div>}>
+          <TodoListFilter />
+        </Suspense>
+        {todoList.map((todoItem) => (
+          <TodoItem key={todoItem.id} item={todoItem} />
+        ))}
+        <TodoListStats />
+      </RecoilRoot>
     </>
   );
 }
